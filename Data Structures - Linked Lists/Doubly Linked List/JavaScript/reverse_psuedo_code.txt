@@ -1,0 +1,94 @@
+a: 2 --> b: 1 --> c: 3 --> d: 4 --> e: 5 --> nullptr
+
+// The variable 'temp' is declared outside of the loop
+// The variable 'current' is declared outside of the loop
+
+Psuedocode:
+Node* current = this->head; // Start from the head of the list
+Node* temp = nullptr; // Temporary node for swapping
+
+while (current != nullptr) {
+    temp = current->prev; // Store the previous node
+    current->prev = current->next; // Swap prev and next pointers
+    current->next = temp; // Complete the swap
+    current = current->prev; // Move to the next node (which is actually the previous node due to the swap)
+}
+
+if (temp != nullptr) {
+    this->tail = this->head; // New tail is the old head
+    this->head = temp->prev; // New head is the last non-null previous node
+}
+
+---
+STEP 1:
+
+b: 1 <--> c: 3 <--> d: 4 <--> e: 5 --> nullptr
+^
+|
+a: 2 --> nullptr
+
+current = a( 2 )
+temp = current.prev( nullptr )
+current.prev = current.next( b(1) )
+current.next = temp
+
+current = current.prev( b(1) )
+
+---
+STEP 2:
+
+c: 3 <--> d: 4 <--> e: 5 --> nullptr
+^
+|
+b: 1 <--> a: 2 --> nullptr
+
+current = b(1)
+temp = current.prev( a(2) )
+current.prev = current.next( c(3) )
+current.next = temp
+
+current = current.prev( c(3) )
+
+---
+STEP 3:
+
+d: 4 <--> e: 5 --> nullptr
+^
+|
+c: 3 <--> b: 1 <--> a: 2 --> nullptr
+
+current = c(3)
+temp = current.prev( b(1) )
+current.prev = current.next( d(4) )
+current.next = temp
+
+current = current.prev( d(4) )
+
+current = current.prev( 
+
+---
+STEP 4:
+
+e: 5 <--> nullptr
+^
+|
+d: 4 <--> c: 3 <--> b: 1 <--> a: 2 --> nullptr
+
+current = d(4)
+temp = current.prev( c(3) )
+current.prev = current.next( e(5) )
+current.next temp
+
+current = current.prev
+
+---
+STEP 5:
+
+nullptr <-- e: 5 <--> d: 4 <--> c: 3 <--> b: 1 <--> a: 2 --> nullptr
+
+current = e(5)
+temp = current.prev( d(4) )
+current.prev = current.next( nullptr )
+current.next = temp
+
+current = nullptr
